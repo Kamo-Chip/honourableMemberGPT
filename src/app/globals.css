@@ -103,6 +103,11 @@
     max-height: calc(100vh);
     overflow-y: auto;
   }
+
+  iframe {
+    height: 100vh !important;
+    overflow-y: auto;
+  }
 }
 ::-webkit-scrollbar {
   height: 5px;
