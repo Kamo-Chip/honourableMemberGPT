@@ -98,16 +98,16 @@
   overflow-y: auto;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1280px) {
   .react-pdf__Document {
     max-height: calc(100vh);
     overflow-y: auto;
   }
 
-  iframe {
+  /* iframe {
     height: 100vh !important;
     overflow-y: auto;
-  }
+  } */
 }
 ::-webkit-scrollbar {
   height: 5px;

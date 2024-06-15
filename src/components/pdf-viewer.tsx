@@ -32,7 +32,7 @@ export const PdfViewer = ({ documentUrl }: { documentUrl: string }) => {
             />
           ))}
       </Document> */}
-      <iframe src={documentUrl} className="w-full h-full" />
+      <iframe src={documentUrl} className="w-full h-screen xl:h-full " />
     </div>
   );
 };
