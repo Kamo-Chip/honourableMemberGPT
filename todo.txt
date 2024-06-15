@@ -1,0 +1,7 @@
+Fix scroll to bottom
+Add share 
+Center bottom text on sidebar
+Fix context usage
+    - Currently everything becomes client component
+Add branding
+Improve RAG
