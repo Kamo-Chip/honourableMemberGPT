@@ -10,7 +10,7 @@ const DocumentDisplay = ({
 
   return (
     <div
-      className={`flex flex-col z-10 ${
+      className={`sticky z-10 pt-10 h-[calc(100vh-78px)] ${
         isDocumentVisible ? "visible" : "hidden"
       }`}
     >

@@ -9,15 +9,17 @@ export const ChatMessage = ({
 }) => {
   return (
     <div
-      className={`max-w-[75%] w-fit flex py-2 px-4 rounded-xl my-4 border-gray-200 border-[1px] shadow-sm ${
+      className={`max-w-[75%] w-fit flex py-2 px-4 rounded-xl my-4 border-[1px] shadow-sm ${
         isLast ? "mb-10" : ""
       } ${
         message.role === "assistant"
-          ? "bg-gray-200 mr-auto"
-          : "bg-blue-300 ml-auto"
+          ? "bg-green-100 mr-auto border-green-200"
+          : "bg-blue-100 ml-auto border-blue-200"
       }`}
     >
-      <pre className="whitespace-pre-wrap leading-normal">{message.content}</pre>
+      <pre className="whitespace-pre-wrap leading-normal">
+        {message.content}
+      </pre>
     </div>
   );
 };

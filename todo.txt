@@ -1,5 +1,4 @@
 Fix scroll to bottom
 Add branding
 Improve RAG
-Fix input to prevent covering by search branding
 Fix mobile pdf viewer

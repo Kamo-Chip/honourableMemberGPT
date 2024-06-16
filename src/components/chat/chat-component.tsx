@@ -50,7 +50,7 @@ const ChatComponent = () => {
   return (
     <div className="flex flex-col w-full relative h-full">
       <div
-        className={`flex flex-col w-full h-full overflow-y-auto py-10 ${
+        className={`flex flex-col w-full h-full pt-10 pr-2 pb-5 max-h-[calc(100vh-100px)] overflow-y-auto ${
           messages.length ? "visible" : "hidden"
         }`}
       >
@@ -64,7 +64,7 @@ const ChatComponent = () => {
         />
       ) : null}
       <form
-        className="absolute bottom-1 w-[97%]"
+        className="fixed bottom-0 left-2 right-2 w-[95%] mx-auto z-20"
         id="chat-form"
         onSubmit={handleSubmit}
       >
@@ -158,12 +158,12 @@ type ChatInputProps = {
 };
 const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
   return (
-    <div className="flex flex-col relative max-w-[900px] mx-auto">
+    <div className="flex flex-col relative max-w-[900px] mx-auto bg-[#fafafa54] rounded">
       <div
         className={`flex items-center bg-white border-solid border-gray-200 border-[1px] shadow-sm rounded-full py-1 px-2`}
       >
         <Textarea
-          className="border-none focus-visible:ring-0 focus-visible:ring-offset-0 rounded-full resize-none min-h-0 h-[40px] max-h-[80px] leading-normal"
+          className="border-none focus-visible:ring-0 focus-visible:ring-offset-0 rounded-full resize-none leading-normal py-0 h-fit max-h-10 min-h-0"
           name="prompt"
           value={input}
           onChange={handleInputChange}
@@ -173,13 +173,12 @@ const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
         <Button
           type="submit"
           id="submit-btn"
-          onClick={() => console.log(input)}
           className="rounded-full w-[50px] h-[35px]"
         >
           <IoIosSend size="24px" color="#fff" />
         </Button>
       </div>
-      <span className="text-sm text-gray-500 font-medium mt-2 text-center">
+      <span className="text-sm text-gray-500 font-medium my-2 text-center shadow-[0 0 5px]">
         HonourableMemberGPT can make mistakes. Check important info.
       </span>
     </div>

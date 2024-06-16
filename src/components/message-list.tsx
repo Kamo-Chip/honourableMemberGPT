@@ -12,19 +12,19 @@ const MessageList = ({
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-      inline: "end",
-    });
+    scrollRef.current?.scrollIntoView();
   }, [messages]);
 
   return (
-    <div className="flex flex-col pb-10">
+    <div className="flex flex-col">
       {messages.map((message, idx) => (
         <>
           <div ref={scrollRef}>
-            <ChatMessage key={message.id} message={message} isLast={idx == messages.length - 1}/>
+            <ChatMessage
+              key={message.id}
+              message={message}
+              isLast={idx == messages.length - 1}
+            />
           </div>
 
           {isLoading &&

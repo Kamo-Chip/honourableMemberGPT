@@ -10,7 +10,7 @@ const ChatDisplay = ({
 }) => {
   return (
     <div
-      className={`p-1 md:p-8 md:pb-1 h-screen w-full ${
+      className={`p-1 md:p-8 md:pb-1 h-screen w-full overflow-y-hidden ${
         isDocumentVisible ? "xl:grid xl:grid-cols-2 xl:gap-16" : ""
       } flex flex-col`}
     >

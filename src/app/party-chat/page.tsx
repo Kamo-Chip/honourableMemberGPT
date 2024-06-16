@@ -82,7 +82,7 @@ const Header = ({
   isSidebarVisible: any;
 }) => {
   return (
-    <div className="flex absolute top-0 z-50 left-0 right-0 pt-2 px-2">
+    <div className="flex fixed top-0 z-50 left-0 right-0 pt-2 px-2">
       <TooltipWrapper
         triggerContent={
           <Button

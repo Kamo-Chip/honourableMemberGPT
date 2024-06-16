@@ -124,6 +124,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: lightgray;
+  background-color: rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  max-height: 10px !important;
 }
