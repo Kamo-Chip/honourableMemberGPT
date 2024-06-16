@@ -5,7 +5,6 @@ import { Input } from "./ui/input";
 import { ChangeEvent, useEffect, useState } from "react";
 import { politicalParties } from "@/lib/utils";
 import { HiUserCircle } from "react-icons/hi";
-import { usePoliticalPartyContext } from "@/context";
 import { PoliticalParty } from "@/types/PoliticalParty";
 import { useRouter } from "next/navigation";
 
@@ -103,7 +102,6 @@ const PartyListContainer = ({
   );
 };
 const PartyListItem = ({ party, idx, hideContainer }: PartyListItemProps) => {
-  const { setPoliticalPartyContext } = usePoliticalPartyContext();
   const router = useRouter();
 
   return (
@@ -112,7 +110,6 @@ const PartyListItem = ({ party, idx, hideContainer }: PartyListItemProps) => {
         idx == politicalParties.length - 1 ? "rounded-b-3xl" : ""
       }`}
       onClick={() => {
-        setPoliticalPartyContext(party);
         hideContainer();
         router.push(`/party-chat?party=${party.abbreviation}`);
       }}

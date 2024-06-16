@@ -2,23 +2,25 @@
 
 import ChatDisplay from "@/components/chat/chat-display";
 import ChatSidebar from "@/components/chat/chat-sidebar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import TooltipWrapper from "@/components/wrappers/tooltip-wrapper";
-import { usePoliticalPartyContext } from "@/context";
 import { getDocument } from "@/lib/dbFunctions";
 import { politicalParties } from "@/lib/utils";
+import { PoliticalParty } from "@/types/PoliticalParty";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { HiMenuAlt2 } from "react-icons/hi";
 const Page = () => {
-  const { politicalPartyContext, setPoliticalPartyContext } =
-    usePoliticalPartyContext();
   const searchParams = useSearchParams();
   const router = useRouter();
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const [documentUrl, setDocumentUrl] = useState("");
   const [isDocumentVisible, setIsDocumentVisible] = useState(false);
+  const [selectedParty, setSelectedParty] = useState<
+    PoliticalParty | undefined
+  >({ logoUrl: "", fullName: "", abbreviation: "" });
 
   const getPartyFromAbbreviation = (abbreviation: string) => {
     const partyToFind = politicalParties.find(
@@ -39,10 +41,10 @@ const Page = () => {
   useEffect(() => {
     const party = searchParams.get("party");
     if (party != null) {
-      setPoliticalPartyContext(getPartyFromAbbreviation(party));
       fetchDocument(party);
       setIsSidebarVisible(false);
       setIsDocumentVisible(false);
+      setSelectedParty(getPartyFromAbbreviation(party));
     } else {
       router.push("/");
     }
@@ -54,7 +56,7 @@ const Page = () => {
         setIsSidebarVisible={setIsSidebarVisible}
         setIsDocumentVisible={setIsDocumentVisible}
         isDocumentVisible={isDocumentVisible}
-        politicalPartyContext={politicalPartyContext}
+        selectedParty={selectedParty}
         isSidebarVisible={isSidebarVisible}
       />
       {isSidebarVisible ? <ChatSidebar /> : null}
@@ -70,13 +72,13 @@ const Header = ({
   setIsSidebarVisible,
   setIsDocumentVisible,
   isDocumentVisible,
-  politicalPartyContext,
+  selectedParty,
   isSidebarVisible,
 }: {
   setIsSidebarVisible: any;
   setIsDocumentVisible: any;
   isDocumentVisible: any;
-  politicalPartyContext: any;
+  selectedParty: any;
   isSidebarVisible: any;
 }) => {
   return (
@@ -98,13 +100,13 @@ const Header = ({
       <TooltipWrapper
         triggerContent={
           <Button
-            className={`flex flex-1 justify-center items-center text-white max-w-fit rounded-full mx-auto py-2 px-4 font-bold text-sm cursor-pointer ${
+            className={`hidden flex-1 justify-center items-center text-white max-w-fit rounded-full mx-auto py-2 px-4 font-bold text-sm cursor-pointer  xl:flex ${
               isSidebarVisible ? "hidden" : "visible"
             }`}
             onClick={() => setIsDocumentVisible(!isDocumentVisible)}
           >
             <span className="mr-2">
-              {politicalPartyContext.abbreviation?.toUpperCase()} manifesto
+              {selectedParty.abbreviation?.toUpperCase()} manifesto
             </span>
             <span>
               {isDocumentVisible ? <FaChevronUp /> : <FaChevronDown />}
@@ -115,6 +117,9 @@ const Header = ({
           <span>{!isDocumentVisible ? "View " : "Hide "} document</span>
         }
       />
+      <Badge className="flex flex-1 justify-center items-center max-w-fit rounded-full mx-auto py-2 px-4 font-bold cursor-pointer xl:hidden">
+        {selectedParty.abbreviation?.toUpperCase()} manifesto
+      </Badge>
     </div>
   );
 };

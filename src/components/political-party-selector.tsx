@@ -1,29 +1,21 @@
 "use client";
 
-import { usePoliticalPartyContext } from "@/context";
 import { politicalParties } from "@/lib/utils";
+import { PoliticalParty } from "@/types/PoliticalParty";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import SearchInput from "./search-input";
 import { Button } from "./ui/button";
-import { PoliticalParty } from "@/types/PoliticalParty";
+import { useState } from "react";
 
-const partyColours = {
-  anc: "yellow",
-};
 const PoliticalPartySelector = () => {
-  const { politicalPartyContext, setPoliticalPartyContext } =
-    usePoliticalPartyContext();
   const router = useRouter();
-
+  const [isLoading, setIsLoading] = useState(false);
   const handlePartyClick = (party: PoliticalParty) => {
-    setPoliticalPartyContext(party);
+    setIsLoading(true);
     router.push(`/party-chat?party=${party.abbreviation}`);
   };
-  // When user hits landing page clear context
-  useEffect(() => {
-    setPoliticalPartyContext("");
-  }, []);
+
+  if (isLoading) return <span>Loading...</span>;
 
   return (
     <div className="flex flex-col">
@@ -31,11 +23,7 @@ const PoliticalPartySelector = () => {
       <div className="flex mt-6 justify-evenly w-full overflow-x-auto pb-2">
         {politicalParties.map((party, idx) => (
           <Button
-            className={`mx-2 rounded-3xl h-fit ${
-              politicalPartyContext.fullName === party.fullName
-                ? "selectedBtn"
-                : ""
-            }`}
+            className={`mx-2 rounded-3xl h-fit`}
             onClick={() => handlePartyClick(party)}
             key={`${party}${idx}`}
           >

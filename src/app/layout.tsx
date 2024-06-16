@@ -1,8 +1,6 @@
-import { PoliticalPartyWrapper } from "@/context";
+import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
 import type { Metadata } from "next";
 import "./globals.css";
-import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
-import TooltipWrapper from "@/components/wrappers/tooltip-wrapper";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,22 +15,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="flex flex-col bg-white">
-        <TooltipWrapper
-          tooltipContent={<span>Check out my YouTube channel</span>}
-          triggerContent={
-            <a
-              className="absolute top-0 right-0 text-sm py-2 px-4 border-dotted border-gray-200 border-l-2 border-b-2 rounded-lg font-light bg-white cursor-pointer z-[100]"
-              href="https://www.youtube.com/@kamoio"
-            >
-              Built by Kamo 👨🏾‍💻
-            </a>
-          }
-        />
-
-        <PoliticalPartyWrapper>
-          <MaxWidthWrapper>{children}</MaxWidthWrapper>
-        </PoliticalPartyWrapper>
+      <body className="flex flex-col">
+        <MaxWidthWrapper>{children}</MaxWidthWrapper>
       </body>
     </html>
   );

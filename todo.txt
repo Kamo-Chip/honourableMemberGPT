@@ -1,7 +1,5 @@
 Fix scroll to bottom
-Add share 
-Center bottom text on sidebar
-Fix context usage
-    - Currently everything becomes client component
 Add branding
 Improve RAG
+Fix input to prevent covering by search branding
+Fix mobile pdf viewer

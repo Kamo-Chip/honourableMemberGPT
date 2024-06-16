@@ -1,6 +1,5 @@
 "use client";
 
-import { usePoliticalPartyContext } from "@/context";
 import { useChat } from "ai/react";
 import { useSearchParams } from "next/navigation";
 import {
@@ -16,7 +15,7 @@ import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 
 const ChatComponent = () => {
-  const { politicalPartyContext } = usePoliticalPartyContext();
+  const searchParams = useSearchParams();
   const {
     messages,
     input,
@@ -28,14 +27,15 @@ const ChatComponent = () => {
   } = useChat({
     api: "api/chat",
     body: {
-      politicalParty: politicalPartyContext.abbreviation,
+      politicalParty: searchParams.get("party"),
     },
   });
-  const searchParams = useSearchParams();
+
   const [hasClickedSuggestion, setHasClickedSuggestion] = useState(false);
 
   useEffect(() => {
     setMessages([]);
+    console.log(searchParams.get("party"));
   }, [searchParams]);
 
   useEffect(() => {

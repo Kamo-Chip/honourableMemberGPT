@@ -1,5 +1,7 @@
 import StandardLoading from "@/containers/loading/standard-loading";
 
-export default function Loading() {
+const Loading = () => {
   return <StandardLoading />;
-}
+};
+
+export default Loading;
