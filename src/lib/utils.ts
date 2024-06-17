@@ -12,9 +12,18 @@ export const convertToAscii = (inputStr: string) => {
 };
 
 export const politicalParties = [
-  { fullName: "African National Congress", abbreviation: "anc", logoUrl: "" },
-  { fullName: "Democratic Alliance", abbreviation: "da", logoUrl: "" },
-  { fullName: "uMkhonto we Sizwe", abbreviation: "m.k.", logoUrl: "" },
-  { fullName: "Economic Freedom Fighters", abbreviation: "eff", logoUrl: "" },
-  { fullName: "Inkatha Free Party", abbreviation: "ifp", logoUrl: "" },
+  {
+    fullName: "African National Congress",
+    abbreviation: "anc",
+    logoUrl: "anc.png",
+  },
+  { fullName: "Democratic Alliance", abbreviation: "da", logoUrl: "da.png" },
+  { fullName: "uMkhonto we Sizwe", abbreviation: "m.k.", logoUrl: "mk.png" },
+  {
+    fullName: "Economic Freedom Fighters",
+    abbreviation: "eff",
+    logoUrl: "eff.png",
+  },
+  { fullName: "Inkatha Free Party", abbreviation: "ifp", logoUrl: "ifp.png" },
+  { fullName: "GNU", abbreviation: "gnu", logoUrl: "gnu.png" },
 ];

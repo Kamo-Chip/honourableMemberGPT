@@ -73,7 +73,8 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
-        grifter: ["Grifter", "sans-serif"],
+        grifter: ["grifter", "sans-serif"],
+        playwrite: [`"Playwrite AU QLD"`, "cursive"],
       },
     },
   },

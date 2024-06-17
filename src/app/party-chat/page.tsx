@@ -2,13 +2,16 @@
 
 import ChatDisplay from "@/components/chat/chat-display";
 import ChatSidebar from "@/components/chat/chat-sidebar";
+import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import TooltipWrapper from "@/components/wrappers/tooltip-wrapper";
 import StandardLoading from "@/containers/loading/standard-loading";
+import Plug from "@/containers/plug/plug";
 import { getDocument } from "@/lib/dbFunctions";
 import { politicalParties } from "@/lib/utils";
 import { PoliticalParty } from "@/types/PoliticalParty";
+import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
@@ -84,6 +87,7 @@ const Header = ({
 }) => {
   return (
     <div className="flex fixed top-0 z-50 left-0 right-0 pt-2 px-2">
+      <Plug position="sm:flex fixed top-0 right-0 hidden" />
       <TooltipWrapper
         triggerContent={
           <Button
@@ -106,7 +110,8 @@ const Header = ({
             }`}
             onClick={() => setIsDocumentVisible(!isDocumentVisible)}
           >
-            <span className="mr-2">
+            <span className="mr-2 flex items-center">
+              <PartyHeaderIcon fileName={selectedParty.logoUrl} />
               {selectedParty.abbreviation?.toUpperCase()} manifesto
             </span>
             <span>
@@ -123,9 +128,19 @@ const Header = ({
           isSidebarVisible ? "hidden" : "visible"
         }`}
       >
+        <PartyHeaderIcon fileName={selectedParty.logoUrl} />
         {selectedParty.abbreviation?.toUpperCase()} manifesto
       </Badge>
     </div>
+  );
+};
+
+const PartyHeaderIcon = ({ fileName }: { fileName: string }) => {
+  return (
+    <Avatar className="w-fit h-fit mr-2">
+      <AvatarImage src={`/party-icons/${fileName}`} className="w-5 h-5" />
+      <AvatarFallback></AvatarFallback>
+    </Avatar>
   );
 };
 

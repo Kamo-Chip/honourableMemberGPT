@@ -83,12 +83,6 @@ export const loadDocumentIntoPinecone = async (
     // Split and segment the pdf
     const documents = await Promise.all(pages.map(prepareDocument));
 
-    documents.flat().forEach((doc, idx) => {
-      console.log("Document: ", idx);
-      console.log(doc.metadata.text);
-    });
-
-    return;
     // Vectorise and embed individual documents
     const vectors = await Promise.all(
       documents.flat().map((doc) => embedDocument(doc, politicalParty))

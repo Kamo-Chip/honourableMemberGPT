@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
   const prompt: CoreMessage = {
     role: "system",
-    content: `INSTRUCTIONS: You are a helpful assistant. Your task is to answer questions based on the given document. The document is provided between "####". Only answer the most recent question. If no relevant information is found, respond with "No relevant information found. Try rephrasing the question."
+    content: `INSTRUCTIONS: You are a helpful assistant. Your task is to answer questions based on the given document. The document is provided between "####". Only answer the most recent question. If no relevant information is found, respond with "These oaks don't have the answer to your question bru 🚶‍♂️"
     ####
     ${context}
     ####`,

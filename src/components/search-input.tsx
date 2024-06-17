@@ -7,6 +7,7 @@ import { politicalParties } from "@/lib/utils";
 import { HiUserCircle } from "react-icons/hi";
 import { PoliticalParty } from "@/types/PoliticalParty";
 import { useRouter } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 interface PartyListItemProps {
   party: PoliticalParty;
@@ -114,7 +115,10 @@ const PartyListItem = ({ party, idx, hideContainer }: PartyListItemProps) => {
         router.push(`/party-chat?party=${party.abbreviation}`);
       }}
     >
-      <HiUserCircle size="32px" />
+      <Avatar>
+        <AvatarImage src={`/party-icons/${party.logoUrl}`}/>
+        <AvatarFallback>🇿🇦</AvatarFallback>
+      </Avatar>
       <span className="ml-4">{party.fullName}</span>
       <span className="ml-1 uppercase text-gray-500 text-sm font-medium">{`(${party.abbreviation})`}</span>
     </li>
