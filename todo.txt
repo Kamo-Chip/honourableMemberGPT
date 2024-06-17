@@ -1,4 +1,2 @@
-Fix scroll to bottom
-Add branding
 Improve RAG
-Fix mobile pdf viewer
+Update design

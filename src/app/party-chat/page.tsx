@@ -5,6 +5,7 @@ import ChatSidebar from "@/components/chat/chat-sidebar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import TooltipWrapper from "@/components/wrappers/tooltip-wrapper";
+import StandardLoading from "@/containers/loading/standard-loading";
 import { getDocument } from "@/lib/dbFunctions";
 import { politicalParties } from "@/lib/utils";
 import { PoliticalParty } from "@/types/PoliticalParty";
@@ -93,7 +94,7 @@ const Header = ({
           </Button>
         }
         tooltipContent={
-          <span>{isSidebarVisible ? "Open " : "Close "} sidebar</span>
+          <span>{isSidebarVisible ? "Close " : "Open "} sidebar</span>
         }
       />
 
@@ -117,7 +118,11 @@ const Header = ({
           <span>{!isDocumentVisible ? "View " : "Hide "} document</span>
         }
       />
-      <Badge className="flex flex-1 justify-center items-center max-w-fit rounded-full mx-auto py-2 px-4 font-bold cursor-pointer xl:hidden">
+      <Badge
+        className={`flex flex-1 justify-center items-center max-w-fit rounded-full mx-auto py-2 px-4 font-bold cursor-pointer xl:hidden ${
+          isSidebarVisible ? "hidden" : "visible"
+        }`}
+      >
         {selectedParty.abbreviation?.toUpperCase()} manifesto
       </Badge>
     </div>

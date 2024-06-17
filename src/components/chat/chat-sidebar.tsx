@@ -13,7 +13,7 @@ const ChatSidebar = () => {
     <div
       className={`fixed top-0 bottom-0 left-0 z-40 min-w-[75vw] md:min-w-[400px] bg-black h-screen pt-20 px-2 md:max-w-[300px] flex flex-col border-r-[1px] border-gray-200 shadow-sm`}
     >
-      <span className="text-white absolute top-4 left-0 right-0 text-center text-xl">
+      <span className="text-white absolute top-10 left-0 right-0 text-center text-base">
         HonourableMemberGPT 🤖
       </span>
       <div className="px-4 mb-8 mt-4">
