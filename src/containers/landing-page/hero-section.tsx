@@ -1,3 +1,4 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -15,11 +16,21 @@ const HeroSection = () => {
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
         </span>
-        <Link href="/party-chat?party=gnu">Stay in the GNU 🐃</Link>
+        <Link
+          href="/party-chat?party=gnu"
+          className="flex items-center justify-center"
+        >
+          Stay in the GNU{" "}
+          <Avatar className="ml-2">
+            <AvatarImage src="/party-icons/gnu.png" />
+            <AvatarFallback>🐃</AvatarFallback>
+          </Avatar>
+        </Link>
       </Button>
-      <span className="text-sm mt-4 font-normal max-w-96 mx-auto text-gray-600">
-        Confused about the GNU? <br />
-        Chat with the their statement of intent document to clear things up 🫡
+      <span className="text-sm mt-4 font-normal max-w-3xl mx-auto text-gray-600">
+        Confused about the Government of National Unity? <br />
+        Chat with the their <i>statement of intent document</i> to clear things
+        up 🧐
       </span>
     </section>
   );

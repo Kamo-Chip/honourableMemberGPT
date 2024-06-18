@@ -2,7 +2,13 @@
 
 import { MdSearch } from "react-icons/md";
 import { Input } from "./ui/input";
-import { ChangeEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { politicalParties } from "@/lib/utils";
 import { HiUserCircle } from "react-icons/hi";
 import { PoliticalParty } from "@/types/PoliticalParty";
@@ -13,14 +19,19 @@ interface PartyListItemProps {
   party: PoliticalParty;
   idx: number;
   hideContainer: any;
+  closeSidebar?: Dispatch<SetStateAction<boolean>>;
 }
 
 interface PartyListContainerProps {
   partiesToDisplay: PoliticalParty[];
   hideContainer: any;
+  closeSidebar?: Dispatch<SetStateAction<boolean>>;
 }
 
-const SearchInput = () => {
+type SearchInputProps = {
+  closeSidebar?: Dispatch<SetStateAction<boolean>>;
+};
+const SearchInput = ({ closeSidebar }: SearchInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [userInput, setUserInput] = useState("");
   const [partiesToDisplay, setPartiesToDisplay] = useState<PoliticalParty[]>(
@@ -31,8 +42,9 @@ const SearchInput = () => {
     setPartiesToDisplay(
       politicalParties.filter(
         (party) =>
-          party.fullName.toLowerCase().includes(partyToSearch) ||
-          party.abbreviation.toLowerCase().includes(partyToSearch)
+          party.abbreviation != "gnu" &&
+          (party.fullName.toLowerCase().includes(partyToSearch) ||
+            party.abbreviation.toLowerCase().includes(partyToSearch))
       )
     );
   };
@@ -48,11 +60,13 @@ const SearchInput = () => {
   };
 
   useEffect(() => {
-    setPartiesToDisplay(politicalParties);
+    setPartiesToDisplay(
+      politicalParties.filter((party) => party.abbreviation != "gnu")
+    );
   }, []);
 
   return (
-    <div className="flex flex-col relative">
+    <div className="flex flex-col relative z-10 text-black">
       <div
         className={`flex items-center bg-white border-solid border-gray-200 border-[1px] rounded-full ${
           isFocused ? "rounded-b-none rounded-t-3xl" : ""
@@ -70,6 +84,7 @@ const SearchInput = () => {
         <PartyListContainer
           partiesToDisplay={partiesToDisplay}
           hideContainer={() => setIsFocused(false)}
+          closeSidebar={closeSidebar}
         />
       ) : null}
     </div>
@@ -79,9 +94,10 @@ const SearchInput = () => {
 const PartyListContainer = ({
   partiesToDisplay,
   hideContainer,
+  closeSidebar,
 }: PartyListContainerProps) => {
   return (
-    <ul className="bg-white border-solid border-gray-100 border-[1px] shadow rounded-b-3xl absolute left-0 right-0 top-[50px]">
+    <ul className="bg-white border-solid border-gray-200 border-[1px] border-t-0 shadow-sm rounded-b-3xl absolute left-0 right-0 top-[50px]">
       {partiesToDisplay.length ? (
         partiesToDisplay.map((party, idx) => (
           <PartyListItem
@@ -89,6 +105,7 @@ const PartyListContainer = ({
             party={party}
             idx={idx}
             hideContainer={hideContainer}
+            closeSidebar={closeSidebar}
           />
         ))
       ) : (
@@ -102,7 +119,12 @@ const PartyListContainer = ({
     </ul>
   );
 };
-const PartyListItem = ({ party, idx, hideContainer }: PartyListItemProps) => {
+const PartyListItem = ({
+  party,
+  idx,
+  hideContainer,
+  closeSidebar,
+}: PartyListItemProps) => {
   const router = useRouter();
 
   return (
@@ -112,11 +134,15 @@ const PartyListItem = ({ party, idx, hideContainer }: PartyListItemProps) => {
       }`}
       onClick={() => {
         hideContainer();
+        if(closeSidebar) {
+          closeSidebar(false);
+        }
+   
         router.push(`/party-chat?party=${party.abbreviation}`);
       }}
     >
       <Avatar>
-        <AvatarImage src={`/party-icons/${party.logoUrl}`}/>
+        <AvatarImage src={`/party-icons/${party.logoUrl}`} />
         <AvatarFallback>🇿🇦</AvatarFallback>
       </Avatar>
       <span className="ml-4">{party.fullName}</span>

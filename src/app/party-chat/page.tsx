@@ -6,7 +6,6 @@ import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import TooltipWrapper from "@/components/wrappers/tooltip-wrapper";
-import StandardLoading from "@/containers/loading/standard-loading";
 import Plug from "@/containers/plug/plug";
 import { getDocument } from "@/lib/dbFunctions";
 import { politicalParties } from "@/lib/utils";
@@ -16,6 +15,18 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { HiMenuAlt2 } from "react-icons/hi";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 const Page = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -35,7 +46,7 @@ const Page = () => {
 
   const fetchDocument = async (party: string) => {
     try {
-      const url = await getDocument(`${party}-2024.pdf`);
+      const url = await getDocument(`${party}.pdf`);
       setDocumentUrl(url);
     } catch (error: any) {
       setDocumentUrl("");
@@ -63,7 +74,9 @@ const Page = () => {
         selectedParty={selectedParty}
         isSidebarVisible={isSidebarVisible}
       />
-      {isSidebarVisible ? <ChatSidebar /> : null}
+      {/* {isSidebarVisible ? <ChatSidebar /> : null}
+       */}
+      <ChatSidebar />
       <ChatDisplay
         documentUrl={documentUrl}
         isDocumentVisible={isDocumentVisible}
@@ -88,19 +101,6 @@ const Header = ({
   return (
     <div className="flex fixed top-0 z-50 left-0 right-0 pt-2 px-2">
       <Plug position="sm:flex fixed top-0 right-0 hidden" />
-      <TooltipWrapper
-        triggerContent={
-          <Button
-            className="text-white self-start fixed cursor-pointer rounded-full "
-            onClick={() => setIsSidebarVisible(!isSidebarVisible)}
-          >
-            <HiMenuAlt2 size="24px" color="#fff" />
-          </Button>
-        }
-        tooltipContent={
-          <span>{isSidebarVisible ? "Close " : "Open "} sidebar</span>
-        }
-      />
 
       <TooltipWrapper
         triggerContent={
@@ -137,8 +137,8 @@ const Header = ({
 
 const PartyHeaderIcon = ({ fileName }: { fileName: string }) => {
   return (
-    <Avatar className="w-fit h-fit mr-2">
-      <AvatarImage src={`/party-icons/${fileName}`} className="w-5 h-5" />
+    <Avatar className="mr-2 w-5 h-5 bg-gray-50">
+      <AvatarImage src={`/party-icons/${fileName}`} />
       <AvatarFallback></AvatarFallback>
     </Avatar>
   );

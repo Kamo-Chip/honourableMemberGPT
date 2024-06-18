@@ -18,12 +18,16 @@ export const politicalParties = [
     logoUrl: "anc.png",
   },
   { fullName: "Democratic Alliance", abbreviation: "da", logoUrl: "da.png" },
-  { fullName: "uMkhonto we Sizwe", abbreviation: "m.k.", logoUrl: "mk.png" },
+  { fullName: "uMkhonto we Sizwe", abbreviation: "mk", logoUrl: "mk.png" },
   {
     fullName: "Economic Freedom Fighters",
     abbreviation: "eff",
     logoUrl: "eff.png",
   },
   { fullName: "Inkatha Free Party", abbreviation: "ifp", logoUrl: "ifp.png" },
-  { fullName: "GNU", abbreviation: "gnu", logoUrl: "gnu.png" },
+  {
+    fullName: "Government of National Unity",
+    abbreviation: "gnu",
+    logoUrl: "gnu.png",
+  },
 ];

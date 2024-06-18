@@ -1,2 +1,6 @@
 Improve RAG
 Update design
+Store gnu in a better fashion
+    - Currently messy with other political parties
+Refactor sidebar code
+Add email collector
