@@ -16,7 +16,7 @@ const ChatSidebar = () => {
     >
       <Logo
         className={
-          "text-white absolute top-10 left-0 right-0 text-center text-base"
+          "text-white absolute top-10 left-0 right-0 text-center text-sm"
         }
       />
       <div className="px-4 mb-8 mt-4">
