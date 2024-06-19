@@ -22,7 +22,6 @@ const HeroSection = () => {
           Stay in the GNU{" "}
           <Avatar className="ml-2">
             <AvatarImage src="/party-icons/gnu.png" />
-            <AvatarFallback>🐃</AvatarFallback>
           </Avatar>
         </Link>
       </Button>
