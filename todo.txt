@@ -1,6 +1,11 @@
 Improve RAG
-Update design
-Store gnu in a better fashion
-    - Currently messy with other political parties
-Refactor sidebar code
 Add email collector
+Find typos
+Structure codebase
+    - Store types correctly
+    - Create types for each component
+    - Componentise everything
+Add meta tags, og images, favicon, etc.
+Landing page feels cluttered on mobile
+    - Maybe reduce font sizes 
+Update copy

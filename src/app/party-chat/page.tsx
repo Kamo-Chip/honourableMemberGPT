@@ -8,25 +8,13 @@ import { Button } from "@/components/ui/button";
 import TooltipWrapper from "@/components/wrappers/tooltip-wrapper";
 import Plug from "@/containers/plug/plug";
 import { getDocument } from "@/lib/dbFunctions";
-import { politicalParties } from "@/lib/utils";
+import { gnuDetails, politicalParties } from "@/lib/utils";
 import { PoliticalParty } from "@/types/PoliticalParty";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
-import { HiMenuAlt2 } from "react-icons/hi";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Dispatch } from "react";
 const Page = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -37,7 +25,9 @@ const Page = () => {
     PoliticalParty | undefined
   >({ logoUrl: "", fullName: "", abbreviation: "" });
 
-  const getPartyFromAbbreviation = (abbreviation: string) => {
+  const getChatSubjectDetails = (abbreviation: string) => {
+    if (abbreviation == "gnu") return gnuDetails;
+
     const partyToFind = politicalParties.find(
       (party) => party.abbreviation == abbreviation
     );
@@ -54,12 +44,12 @@ const Page = () => {
   };
 
   useEffect(() => {
-    const party = searchParams.get("party");
-    if (party != null) {
-      fetchDocument(party);
+    const chattingWith = searchParams.get("chattingWith");
+    if (chattingWith != null) {
+      fetchDocument(chattingWith);
       setIsSidebarVisible(false);
       setIsDocumentVisible(false);
-      setSelectedParty(getPartyFromAbbreviation(party));
+      setSelectedParty(getChatSubjectDetails(chattingWith));
     } else {
       router.push("/");
     }
@@ -67,15 +57,15 @@ const Page = () => {
 
   return (
     <div className="flex w-full flex-col items-center">
-      <Header
-        setIsSidebarVisible={setIsSidebarVisible}
-        setIsDocumentVisible={setIsDocumentVisible}
-        isDocumentVisible={isDocumentVisible}
-        selectedParty={selectedParty}
-        isSidebarVisible={isSidebarVisible}
-      />
-      {/* {isSidebarVisible ? <ChatSidebar /> : null}
-       */}
+      {selectedParty && (
+        <Header
+          setIsDocumentVisible={setIsDocumentVisible}
+          isDocumentVisible={isDocumentVisible}
+          selectedParty={selectedParty}
+          isSidebarVisible={isSidebarVisible}
+        />
+      )}
+
       <ChatSidebar />
       <ChatDisplay
         documentUrl={documentUrl}
@@ -85,19 +75,28 @@ const Page = () => {
   );
 };
 
+type HeaderProps = {
+  setIsDocumentVisible: Dispatch<SetStateAction<boolean>>;
+  isDocumentVisible: boolean;
+  selectedParty: PoliticalParty;
+  isSidebarVisible: boolean;
+};
 const Header = ({
-  setIsSidebarVisible,
   setIsDocumentVisible,
   isDocumentVisible,
   selectedParty,
   isSidebarVisible,
-}: {
-  setIsSidebarVisible: any;
-  setIsDocumentVisible: any;
-  isDocumentVisible: any;
-  selectedParty: any;
-  isSidebarVisible: any;
-}) => {
+}: HeaderProps) => {
+  const getHeaderBadgeText = (): string => {
+    console.log(selectedParty);
+    if (!selectedParty.abbreviation) return "";
+    if (selectedParty.abbreviation === "gnu") {
+      return selectedParty.abbreviation.toUpperCase() + " statement of intent";
+    } else {
+      return selectedParty.abbreviation.toUpperCase() + " manifesto";
+    }
+  };
+
   return (
     <div className="flex fixed top-0 z-50 left-0 right-0 pt-2 px-2">
       <Plug position="sm:flex fixed top-0 right-0 hidden" />
@@ -112,7 +111,7 @@ const Header = ({
           >
             <span className="mr-2 flex items-center">
               <PartyHeaderIcon fileName={selectedParty.logoUrl} />
-              {selectedParty.abbreviation?.toUpperCase()} manifesto
+              {getHeaderBadgeText()}
             </span>
             <span>
               {isDocumentVisible ? <FaChevronUp /> : <FaChevronDown />}
@@ -129,7 +128,7 @@ const Header = ({
         }`}
       >
         <PartyHeaderIcon fileName={selectedParty.logoUrl} />
-        {selectedParty.abbreviation?.toUpperCase()} manifesto
+        {getHeaderBadgeText()}
       </Badge>
     </div>
   );
@@ -139,7 +138,7 @@ const PartyHeaderIcon = ({ fileName }: { fileName: string }) => {
   return (
     <Avatar className="mr-2 w-5 h-5 bg-gray-50">
       <AvatarImage src={`/party-icons/${fileName}`} />
-      <AvatarFallback></AvatarFallback>
+      <AvatarFallback className="bg-black w-5 h-5"></AvatarFallback>
     </Avatar>
   );
 };

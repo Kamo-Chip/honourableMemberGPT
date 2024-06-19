@@ -14,7 +14,11 @@ import MessageList from "../message-list";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 
-const ChatComponent = () => {
+type ChatComponentProps = {
+  isChatLoading: boolean;
+};
+
+const ChatComponent = ({ isChatLoading }: ChatComponentProps) => {
   const searchParams = useSearchParams();
   const {
     messages,
@@ -27,7 +31,7 @@ const ChatComponent = () => {
   } = useChat({
     api: "api/chat",
     body: {
-      politicalParty: searchParams.get("party"),
+      politicalParty: searchParams.get("chattingWith"),
     },
   });
 
@@ -35,7 +39,6 @@ const ChatComponent = () => {
 
   useEffect(() => {
     setMessages([]);
-    console.log(searchParams.get("party"));
   }, [searchParams]);
 
   useEffect(() => {
@@ -57,7 +60,7 @@ const ChatComponent = () => {
         <MessageList messages={messages} isLoading={isLoading} />
       </div>
 
-      {!messages.length ? (
+      {!messages.length && !isChatLoading ? (
         <PromptSuggestionContainer
           setHasClickedSuggestion={setHasClickedSuggestion}
           setInput={setInput}
@@ -121,7 +124,7 @@ const PromptSuggestionContainer = ({
         Some questions to get the conversation going 💬
       </span>
       <div className="flex flex-wrap items-center justify-center sm:grid sm:grid-cols-2 gap-4 sm:grid-rows-2 w-full overflow-x-auto mb-2">
-        {searchParams.get("party") != "gnu" ? (
+        {searchParams.get("chattingWith") != "gnu" ? (
           <>
             <PromptSuggestion
               setInput={setInput}

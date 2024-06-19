@@ -25,9 +25,15 @@ export const politicalParties = [
     logoUrl: "eff.png",
   },
   { fullName: "Inkatha Free Party", abbreviation: "ifp", logoUrl: "ifp.png" },
-  {
-    fullName: "Government of National Unity",
-    abbreviation: "gnu",
-    logoUrl: "gnu.png",
-  },
+  // {
+  //   fullName: "Government of National Unity",
+  //   abbreviation: "gnu",
+  //   logoUrl: "gnu.png",
+  // },
 ];
+
+export const gnuDetails = {
+  fullName: "Government of National Unity",
+  abbreviation: "gnu",
+  logoUrl: "gnu.png",
+};

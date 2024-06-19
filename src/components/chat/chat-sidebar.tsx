@@ -1,32 +1,23 @@
 "use client";
 
-import Logo from "@/containers/logo/logo";
-import Plug from "@/containers/plug/plug";
-import { politicalParties } from "@/lib/utils";
-import { PoliticalParty } from "@/types/PoliticalParty";
-import { useRouter, useSearchParams } from "next/navigation";
-import SearchInput from "../search-input";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import TooltipWrapper from "../wrappers/tooltip-wrapper";
-import { HiMenuAlt4 } from "react-icons/hi";
+import Logo from "@/containers/logo/logo";
+import Plug from "@/containers/plug/plug";
+import { gnuDetails, politicalParties } from "@/lib/utils";
+import { PoliticalParty } from "@/types/PoliticalParty";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { HiMenuAlt4 } from "react-icons/hi";
+import SearchInput from "../search-input";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const ChatSidebar = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
 
   return (
@@ -37,8 +28,9 @@ const ChatSidebar = () => {
         </Button>
       </SheetTrigger>
       <SheetContent
-        side={"left"}
         className="w-[80vw] max-w-[500px] z-[101] text-white bg-black h-screen pt-20 px-2 flex flex-col shadow-sm border-r-2 border-black"
+        side={"left"}
+        onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <Logo
           className={
@@ -46,8 +38,7 @@ const ChatSidebar = () => {
           }
         />
         <div className="mb-8 mt-4">
-          
-          <SearchInput closeSidebar={setOpen}/>
+          <SearchInput closeSidebar={() => setOpen(false)} />
           <SheetClose>
             <SidebarListContainer />
           </SheetClose>
@@ -65,9 +56,9 @@ const SidebarListItem = ({ party }: { party: PoliticalParty }) => {
   return (
     <li
       className={`p-4 hover:bg-gray-400 cursor-pointer flex items-center rounded-3xl font-medium ${
-        searchParams.get("party") === party.abbreviation ? "selectedBtn" : ""
+        searchParams.get("chattingWith") === party.abbreviation ? "selectedBtn" : ""
       }`}
-      onClick={() => router.push(`/party-chat?party=${party.abbreviation}`)}
+      onClick={() => router.push(`/party-chat?chattingWith=${party.abbreviation}`)}
     >
       <Avatar className="bg-gray-50 mr-4 w-[30px] h-[30px] rounded-full">
         <AvatarImage src={`/party-icons/${party.logoUrl}`} className="" />
@@ -79,17 +70,19 @@ const SidebarListItem = ({ party }: { party: PoliticalParty }) => {
 };
 
 const SidebarListContainer = () => {
-  const gnu = politicalParties.find((party) => party.abbreviation === "gnu");
-
   return (
-    <ul className="flex flex-col mt-4 overflow-y-auto text-white">
-      {gnu && <SidebarListItem party={gnu} />}
+    <ul className="flex flex-col mt-8 overflow-y-auto text-white">
+      <span className="text-left pl-4 font-medium text-sm text-neutral-300">
+        GNU
+      </span>
+      <SidebarListItem party={gnuDetails} />
 
-      {politicalParties
-        .filter((party) => party.abbreviation != "gnu")
-        .map((party, idx) => (
-          <SidebarListItem party={party} key={`chat-sidebar${party}${idx}`} />
-        ))}
+      <span className="text-left pl-4 font-medium text-sm text-neutral-300 mt-6">
+        Parties
+      </span>
+      {politicalParties.map((party, idx) => (
+        <SidebarListItem party={party} key={`chat-sidebar${party}${idx}`} />
+      ))}
     </ul>
   );
 };

@@ -1,36 +1,17 @@
 "use client";
 
-import { MdSearch } from "react-icons/md";
-import { Input } from "./ui/input";
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
 import { politicalParties } from "@/lib/utils";
-import { HiUserCircle } from "react-icons/hi";
 import { PoliticalParty } from "@/types/PoliticalParty";
 import { useRouter } from "next/navigation";
+import { ChangeEvent, useEffect, useState } from "react";
+import { MdSearch } from "react-icons/md";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-
-interface PartyListItemProps {
-  party: PoliticalParty;
-  idx: number;
-  hideContainer: any;
-  closeSidebar?: Dispatch<SetStateAction<boolean>>;
-}
-
-interface PartyListContainerProps {
-  partiesToDisplay: PoliticalParty[];
-  hideContainer: any;
-  closeSidebar?: Dispatch<SetStateAction<boolean>>;
-}
+import { Input } from "./ui/input";
 
 type SearchInputProps = {
-  closeSidebar?: Dispatch<SetStateAction<boolean>>;
+  closeSidebar?: () => void;
 };
+
 const SearchInput = ({ closeSidebar }: SearchInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [userInput, setUserInput] = useState("");
@@ -42,9 +23,8 @@ const SearchInput = ({ closeSidebar }: SearchInputProps) => {
     setPartiesToDisplay(
       politicalParties.filter(
         (party) =>
-          party.abbreviation != "gnu" &&
-          (party.fullName.toLowerCase().includes(partyToSearch) ||
-            party.abbreviation.toLowerCase().includes(partyToSearch))
+          party.fullName.toLowerCase().includes(partyToSearch) ||
+          party.abbreviation.toLowerCase().includes(partyToSearch)
       )
     );
   };
@@ -60,9 +40,7 @@ const SearchInput = ({ closeSidebar }: SearchInputProps) => {
   };
 
   useEffect(() => {
-    setPartiesToDisplay(
-      politicalParties.filter((party) => party.abbreviation != "gnu")
-    );
+    setPartiesToDisplay(politicalParties);
   }, []);
 
   return (
@@ -89,6 +67,12 @@ const SearchInput = ({ closeSidebar }: SearchInputProps) => {
       ) : null}
     </div>
   );
+};
+
+type PartyListContainerProps = {
+  partiesToDisplay: PoliticalParty[];
+  hideContainer: any;
+  closeSidebar?: () => void;
 };
 
 const PartyListContainer = ({
@@ -119,6 +103,14 @@ const PartyListContainer = ({
     </ul>
   );
 };
+
+type PartyListItemProps = {
+  party: PoliticalParty;
+  idx: number;
+  hideContainer: any;
+  closeSidebar?: () => void;
+};
+
 const PartyListItem = ({
   party,
   idx,
@@ -134,11 +126,11 @@ const PartyListItem = ({
       }`}
       onClick={() => {
         hideContainer();
-        if(closeSidebar) {
-          closeSidebar(false);
+        if (closeSidebar) {
+          closeSidebar();
         }
-   
-        router.push(`/party-chat?party=${party.abbreviation}`);
+
+        router.push(`/party-chat?chattingWith=${party.abbreviation}`);
       }}
     >
       <Avatar>

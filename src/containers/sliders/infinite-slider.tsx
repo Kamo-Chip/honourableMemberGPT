@@ -26,11 +26,11 @@ const InfiniteHorizontalScrollSlide = ({ slides }: { slides: any }) => {
           <div
             key={index}
             style={{ width: `${100 / slides.length}%` }}
-            className={`flex-shrink-0 max-sm:!w-fit`}
+            className={`flex-shrink-0`}
           >
-            <div className="flex flex-col items-center justify-center h-full text-6xl">
+            {/* <div className="flex flex-col items-center justify-center"> */}
               {slide}
-            </div>
+            {/* </div> */}
           </div>
         ))}
       </motion.div>

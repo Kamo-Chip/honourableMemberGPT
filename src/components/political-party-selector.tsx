@@ -28,25 +28,21 @@ const PoliticalPartySelector = () => {
   const [isLoading, setIsLoading] = useState(false);
   const handlePartyClick = (party: PoliticalParty) => {
     setIsLoading(true);
-    router.push(`/party-chat?party=${party.abbreviation}`);
+    router.push(`/party-chat?chattingWith=${party.abbreviation}`);
   };
 
   const generateSlides = () => {
-    const slides = politicalParties
-      .filter((party) => party.abbreviation != "gnu")
-      .map((party, idx) => (
-        <Button
-          className={`mx-2 rounded-3xl h-fit ${
-            partyColours[party.abbreviation]
-          }`}
-          onClick={() => handlePartyClick(party)}
-          key={`${party}${idx}`}
-        >
-          <span className="w-10 mx-4 text-ellipsis overflow-hidden whitespace-nowrap">
-            {party.abbreviation.toUpperCase()}
-          </span>
-        </Button>
-      ));
+    const slides = politicalParties.map((party, idx) => (
+      <Button
+        className={`mx-2 rounded-3xl h-fit ${partyColours[party.abbreviation]} max-w-full max-sm:px-0`}
+        onClick={() => handlePartyClick(party)}
+        key={`${party}${idx}`}
+      >
+        <span className="w-10 mx-4 text-ellipsis overflow-hidden whitespace-nowrap ">
+          {party.abbreviation.toUpperCase()}
+        </span>
+      </Button>
+    ));
 
     return slides;
   };

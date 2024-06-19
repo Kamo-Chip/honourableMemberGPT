@@ -1,5 +1,6 @@
 import ChatComponent from "./chat-component";
 import DocumentDisplay from "../document-display";
+import { useEffect } from "react";
 
 const ChatDisplay = ({
   documentUrl,
@@ -19,7 +20,7 @@ const ChatDisplay = ({
         isDocumentVisible={isDocumentVisible}
       />
 
-      <ChatComponent />
+      <ChatComponent isChatLoading={documentUrl === ""} />
     </div>
   );
 };
