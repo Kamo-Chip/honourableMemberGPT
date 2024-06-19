@@ -286,7 +286,7 @@ const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
           </DialogHeader>
           <DialogFooter>
             <Button type="submit" className="mx-auto" onClick={handleSignIn}>
-              Sign Up - It's free
+              {"Sign Up - It's free"}
             </Button>
           </DialogFooter>
         </DialogContent>
