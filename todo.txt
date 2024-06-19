@@ -1,5 +1,5 @@
-Improve RAG
 Add email collector
+Improve RAG
 Find typos
 Structure codebase
     - Store types correctly

@@ -13,6 +13,19 @@ import { IoIosSend } from "react-icons/io";
 import MessageList from "../message-list";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../../../firebase/firebaseClient";
 
 type ChatComponentProps = {
   isChatLoading: boolean;
@@ -192,28 +205,128 @@ const PromptSuggestionContainer = ({
   );
 };
 
+const DialogWrapper = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit profile</DialogTitle>
+          <DialogDescription>
+            Make changes to your profile here. Click save when you're done.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input
+              id="name"
+              defaultValue="Pedro Duarte"
+              className="col-span-3"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="username" className="text-right">
+              Username
+            </Label>
+            <Input
+              id="username"
+              defaultValue="@peduarte"
+              className="col-span-3"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button type="submit">Save changes</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
 type ChatInputProps = {
   handleInputChange: ChangeEventHandler;
   input: string;
 };
 const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
+  const [numMessages, setNumMessages] = useState<number>(0);
+  const [open, setOpen] = useState(false);
+
+  const handleSignIn = async () => {
+    try {
+      await signInWithPopup(auth, new GoogleAuthProvider());
+      localStorage.setItem("hasSignedIn", "true");
+    } catch (e: any) {
+      console.log("Could not sign in user: ", e.message);
+    }
+  };
+
+  useEffect(() => {
+    console.log(numMessages);
+    if (numMessages == 3) {
+      const hasSignedIn = localStorage.getItem("hasSignedIn") === "tru";
+      if (!hasSignedIn) {
+        setOpen(true);
+        localStorage.setItem("hasSignedIn", "true");
+      }
+    }
+  }, [numMessages]);
+
   return (
     <div className="flex flex-col relative max-w-[900px] mx-auto bg-[#fafafa54] rounded">
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Seems that you like the app</DialogTitle>
+            <DialogDescription>
+              Sign up to get notified via email when I upload new projects
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button type="submit" className="mx-auto" onClick={handleSignIn}>
+              Sign Up - It's free
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       <div
         className={`flex items-center bg-white border-solid border-gray-200 border-[1px] shadow-sm rounded-full py-1 px-2`}
       >
         <Textarea
-          className="border-none focus-visible:ring-0 focus-visible:ring-offset-0 rounded-full resize-none leading-normal py-0 h-fit max-h-10 min-h-0"
+          className="border-none focus-visible:ring-0 focus-visible:ring-offset-0 rounded-full resize-none leading-normal py-0 h-fit max-h-20 min-h-0"
           name="prompt"
           value={input}
           onChange={handleInputChange}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              const submitBtn = document.querySelector(
+                "#submit-btn"
+              ) as HTMLButtonElement;
+              submitBtn.click();
+            }
+          }}
           id="input"
           placeholder="Ask a question about the manifesto..."
         />
         <Button
-          type="submit"
+          // type="submit"
           id="submit-btn"
           className="rounded-full w-[50px] h-[35px]"
+          onClick={() => {
+            setNumMessages(numMessages + 1);
+            const numPrompts = localStorage.getItem("numPrompts");
+            if (!numPrompts) {
+              localStorage.setItem("numPrompts", "1");
+            } else {
+              localStorage.setItem(
+                "numPrompts",
+                `${Number.parseInt(numPrompts) + 1}`
+              );
+            }
+          }}
         >
           <IoIosSend size="24px" color="#fff" />
         </Button>
