@@ -1,4 +1,3 @@
-Add email collector
 Improve RAG
 Find typos
 Structure codebase
@@ -6,6 +5,3 @@ Structure codebase
     - Create types for each component
     - Componentise everything
 Add meta tags, og images, favicon, etc.
-Landing page feels cluttered on mobile
-    - Maybe reduce font sizes 
-Update copy

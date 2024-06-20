@@ -6,7 +6,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { useChat } from "ai/react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -220,9 +220,8 @@ const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
   };
 
   useEffect(() => {
-    console.log(numMessages);
     if (numMessages == 3) {
-      const hasSignedIn = localStorage.getItem("hasSignedIn") === "tru";
+      const hasSignedIn = localStorage.getItem("hasSignedIn") === "true";
       if (!hasSignedIn) {
         setOpen(true);
         localStorage.setItem("hasSignedIn", "true");
@@ -241,7 +240,14 @@ const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button type="submit" className="mx-auto" onClick={handleSignIn}>
+            <Button
+              type="submit"
+              className="mx-auto"
+              onClick={async () => {
+                await handleSignIn();
+                setOpen(false);
+              }}
+            >
               {"Sign Up - It's free"}
             </Button>
           </DialogFooter>
