@@ -1,4 +1,5 @@
 Improve RAG
+Add analytics
 Find typos
 Structure codebase
     - Store types correctly
