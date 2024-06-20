@@ -8,7 +8,6 @@ export async function POST(req: Request) {
     politicalParty,
   }: { messages: CoreMessage[]; politicalParty: string } = await req.json();
 
-  console.log(politicalParty);
   const lastMessage = messages[messages.length - 1];
 
   const context = await getContext(

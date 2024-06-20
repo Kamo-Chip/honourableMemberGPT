@@ -160,7 +160,7 @@ const PromptSuggestionContainer = ({
             <PromptSuggestion
               setInput={setInput}
               prompt={"Give me quick a summary of the document"}
-              id={`prompt-3`}
+              id={`prompt-4`}
               title={"🥱 TLDR"}
               setHasClickedSuggestion={setHasClickedSuggestion}
             />
@@ -183,7 +183,7 @@ const PromptSuggestionContainer = ({
             />
             <PromptSuggestion
               setInput={setInput}
-              prompt={"What is the reason for GNU existing?"}
+              prompt={"What is the reason for the GNU existing?"}
               id={`prompt-3`}
               title={"🤔 Why GNU?"}
               setHasClickedSuggestion={setHasClickedSuggestion}
@@ -191,7 +191,7 @@ const PromptSuggestionContainer = ({
             <PromptSuggestion
               setInput={setInput}
               prompt={"What are the priorities of the GNU?"}
-              id={`prompt-3`}
+              id={`prompt-4`}
               title={"🥊 Priorities"}
               setHasClickedSuggestion={setHasClickedSuggestion}
             />

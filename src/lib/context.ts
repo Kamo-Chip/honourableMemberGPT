@@ -48,7 +48,7 @@ export const getContext = async (
     console.log(matches);
 
     const qualifyingDocs = matches.filter(
-      (match) => match.score && match.score > 0.75
+      (match) => match.score && match.score > 0.7
     );
 
     let docs = qualifyingDocs.map((match) => match?.metadata?.text);

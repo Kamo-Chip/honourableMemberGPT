@@ -46,6 +46,7 @@ const Page = () => {
   useEffect(() => {
     const chattingWith = searchParams.get("chattingWith");
     if (chattingWith != null) {
+      setDocumentUrl("");
       fetchDocument(chattingWith);
       setIsSidebarVisible(false);
       setIsDocumentVisible(false);
@@ -88,7 +89,6 @@ const Header = ({
   isSidebarVisible,
 }: HeaderProps) => {
   const getHeaderBadgeText = (): string => {
-    console.log(selectedParty);
     if (!selectedParty.abbreviation) return "";
     if (selectedParty.abbreviation === "gnu") {
       return selectedParty.abbreviation.toUpperCase() + " statement of intent";
