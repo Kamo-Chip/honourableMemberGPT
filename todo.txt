@@ -4,4 +4,3 @@ Structure codebase
     - Store types correctly
     - Create types for each component
     - Componentise everything
-Add meta tags, og images, favicon, etc.

@@ -5,7 +5,7 @@ import InfiniteHorizontalScrollSlide from "@/containers/sliders/infinite-slider"
 import { politicalParties } from "@/lib/utils";
 import { PoliticalParty } from "@/types/PoliticalParty";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchInput from "./search-input";
 import { Button } from "./ui/button";
 
@@ -28,10 +28,16 @@ const PoliticalPartySelector = () => {
     router.push(`/party-chat?chattingWith=${party.abbreviation}`);
   };
 
+  useEffect(() => {
+    console.log("What are you doing here? ");
+  }, []);
+
   const generateSlides = () => {
     const slides = politicalParties.map((party, idx) => (
       <Button
-        className={`mx-2 rounded-3xl h-fit ${partyColours[party.abbreviation]} max-w-full max-sm:px-0`}
+        className={`mx-2 rounded-3xl h-fit ${
+          partyColours[party.abbreviation]
+        } max-w-full max-sm:px-0`}
         onClick={() => handlePartyClick(party)}
         key={`${party}${idx}`}
       >
