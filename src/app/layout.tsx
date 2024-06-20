@@ -4,6 +4,7 @@ import "./globals.css";
 import ogImage from "./opengraph-image.png";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://honourable-member-gpt.vercel.app"),
   title: "HonourableMemberGPT",
   description:
     "An AI chatbot that makes you an informed citizen by giving you the TLDR of political party manifestos",
