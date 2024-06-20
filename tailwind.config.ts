@@ -75,6 +75,7 @@ const config = {
       fontFamily: {
         grifter: ["grifter", "sans-serif"],
         playwrite: [`"Playwrite AU QLD"`, "cursive"],
+        interTight: ["Inter Tight", "sans-serif"],
       },
     },
   },
