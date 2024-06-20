@@ -1,16 +1,13 @@
 "use client";
 
+import StandardLoading from "@/containers/loading/standard-loading";
+import InfiniteHorizontalScrollSlide from "@/containers/sliders/infinite-slider";
 import { politicalParties } from "@/lib/utils";
 import { PoliticalParty } from "@/types/PoliticalParty";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import SearchInput from "./search-input";
 import { Button } from "./ui/button";
-import { useState } from "react";
-import StandardLoading from "@/containers/loading/standard-loading";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
-import SliderNumber from "@/containers/sliders/infinite-slider";
-import InfiniteHorizontalScrollSlide from "@/containers/sliders/infinite-slider";
 
 type PartyColoursType = {
   [key: string]: string;
