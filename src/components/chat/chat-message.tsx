@@ -1,4 +1,6 @@
 import { Message } from "ai";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export const ChatMessage = ({
   message,
@@ -17,9 +19,14 @@ export const ChatMessage = ({
           : "bg-blue-100 ml-auto border-blue-200"
       }`}
     >
-      <pre className="whitespace-pre-wrap leading-normal">
+      {/* <pre className="whitespace-pre-wrap leading-normal"> */}
+      <Markdown
+        className={`leading-normal chatMessage`}
+        remarkPlugins={[remarkGfm]}
+      >
         {message.content}
-      </pre>
+      </Markdown>
+      {/* </pre> */}
     </div>
   );
 };

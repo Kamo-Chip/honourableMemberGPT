@@ -34,8 +34,6 @@ export const getContext = async (
   namespaceToAccess: string,
   politicalParty: string
 ) => {
-  console.log("Query: ", query);
-  console.log("Political party: ", politicalParty);
   try {
     const queryEmbeddings = await getEmbeddings(query);
     const matches = await getMatchesFromEmbeddings(
@@ -45,7 +43,7 @@ export const getContext = async (
       politicalParty
     );
 
-    console.log(matches);
+    // console.log(matches);
 
     const qualifyingDocs = matches.filter(
       (match) => match.score && match.score > 0.7

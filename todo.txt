@@ -1,8 +1,5 @@
-Improve RAG
-Add analytics
-Store prompts
-Find typos
 Structure codebase
     - Store types correctly
     - Create types for each component
     - Componentise everything
+Fix cta button appearing during loading

@@ -9,7 +9,16 @@ export async function POST(req: Request) {
   }: { messages: CoreMessage[]; politicalParty: string } = await req.json();
 
   const lastMessage = messages[messages.length - 1];
+  const prevMessage = messages[messages.length - 3]; // User's previous message
+  const prevResponse = messages[messages.length - 2]; // Bot's previous response
 
+  let messageContext = `--THE USER'S CURRENT MESSAGE: ${lastMessage.content.toString()}`;
+  if (prevMessage && prevResponse) {
+    messageContext += `--YOUR PREVIOUS RESPONSE: ${prevResponse.content.toString()}`;
+    messageContext += `--THE USER'S PREVIOUS MESSAGE: ${prevMessage.content.toString()}--`;
+  }
+
+  console.log("Message Context: ", messageContext);
   const context = await getContext(
     lastMessage.content.toString(),
     "manifestos",
@@ -18,10 +27,12 @@ export async function POST(req: Request) {
 
   const prompt: CoreMessage = {
     role: "system",
-    content: `INSTRUCTIONS: You are a helpful assistant. Your task is to answer questions based on the given document. The document is provided between "####". Only answer the most recent question. If no relevant information is found, respond with "These oaks don't have the answer to your question bru 🚶‍♂️"
+    content: `INSTRUCTIONS: You are a helpful assistant. Your task is to answer questions based on the provided document. The document content is enclosed between "####". Use the recent message history below to assist in answering follow-up questions. Be concise. If the document does not contain relevant information, respond with "These oaks don't have the answer to your question bru 🚶‍♂️".
+
+    #### 
+    DOCUMENT CONTENT: ${context}
     ####
-    ${context}
-    ####`,
+    RECENT MESSAGE HISTORY: ${messageContext}`,
   };
 
   const result = await streamText({

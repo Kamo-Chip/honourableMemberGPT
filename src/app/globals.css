@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Playwrite+AU+QLD:wght@100..400&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap");
 
 @font-face {
   font-family: "grifter";
@@ -89,6 +89,10 @@
 
 * {
   box-sizing: border-box;
+}
+
+.chatMessage {
+  @apply py-2 leading-7 tracking-[0.01em];
 }
 
 .selectedBtn {

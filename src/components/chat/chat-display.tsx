@@ -1,6 +1,5 @@
-import ChatComponent from "./chat-component";
 import DocumentDisplay from "../document-display";
-import { useEffect } from "react";
+import ChatComponent from "./chat-component";
 
 const ChatDisplay = ({
   documentUrl,
@@ -9,6 +8,7 @@ const ChatDisplay = ({
   documentUrl: string;
   isDocumentVisible: boolean;
 }) => {
+
   return (
     <div
       className={`p-1 md:p-8 md:pb-1 h-screen w-full overflow-y-hidden ${

@@ -2,6 +2,7 @@ import MaxWidthWrapper from "@/components/wrappers/max-width-wrapper";
 import type { Metadata } from "next";
 import "./globals.css";
 import ogImage from "./opengraph-image.png";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://honourable-member-gpt.vercel.app"),
@@ -37,6 +38,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="flex flex-col">
         <MaxWidthWrapper>{children}</MaxWidthWrapper>
+        <Analytics />
       </body>
     </html>
   );
