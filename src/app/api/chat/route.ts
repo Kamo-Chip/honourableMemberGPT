@@ -18,7 +18,6 @@ export async function POST(req: Request) {
     messageContext += `--THE USER'S PREVIOUS MESSAGE: ${prevMessage.content.toString()}--`;
   }
 
-  console.log("Message Context: ", messageContext);
   const context = await getContext(
     lastMessage.content.toString(),
     "manifestos",
@@ -27,20 +26,44 @@ export async function POST(req: Request) {
 
   const prompt: CoreMessage = {
     role: "system",
-    content: `INSTRUCTIONS: You are a helpful assistant. Your task is to answer questions based on the provided document. The document content is enclosed between "####". Use the recent message history below to assist in answering follow-up questions. Be concise. If the document does not contain relevant information, respond with "These oaks don't have the answer to your question bru 🚶‍♂️".
+    content: `You are a helpful ai assisstant, helping users by following directives and answering questions based on the given document context.
 
-    #### 
-    DOCUMENT CONTENT: ${context}
-    ####
-    RECENT MESSAGE HISTORY: ${messageContext}`,
+    Generate your response by following the steps below:
+    
+    1. Recursively break-down the message into smaller questions/directives
+    
+    2. For each atomic question/directive:
+    
+    2a. Select the most relevant information from the context in light of the conversation history
+    
+    3. Generate a draft response using the selected information, whose brevity/detail are concise
+    
+    4. Remove duplicate content from the draft response
+    
+    5. Generate your final response after adjusting it to increase accuracy and relevance
+    
+    6. Now only show your final response! Do not provide any explanations or details
+    
+    CONTEXT:
+    
+    ${context}
+    
+    CONVERSATION HISTORY:
+    
+    ${messageContext}
+    
+    POST:
+    
+    ${lastMessage}
+    
+    Beginners want detailed answers with explanations. Do not respond to questions unrelated to the document context.
+    
+    If you are unable to help the user, respond with "These oaks don't have the answers you're looking for bru 🚶‍♂️".`,
   };
 
   const result = await streamText({
     model: openai("gpt-4o"),
-    messages: [
-      prompt,
-      ...messages.filter((message) => message.role === "user"),
-    ],
+    messages: [prompt, ...messages],
   });
 
   return result.toAIStreamResponse();

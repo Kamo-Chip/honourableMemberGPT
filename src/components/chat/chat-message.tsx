@@ -11,7 +11,7 @@ export const ChatMessage = ({
 }) => {
   return (
     <div
-      className={`max-w-[75%] w-fit flex py-2 px-4 rounded-xl my-4 border-[1px] shadow-sm ${
+      className={`max-w-[75%] w-fit flex py-1 px-4 rounded-xl my-4 border-[1px] shadow-sm ${
         isLast ? "mb-10" : ""
       } ${
         message.role === "assistant"
@@ -19,14 +19,12 @@ export const ChatMessage = ({
           : "bg-blue-100 ml-auto border-blue-200"
       }`}
     >
-      {/* <pre className="whitespace-pre-wrap leading-normal"> */}
       <Markdown
         className={`leading-normal chatMessage`}
         remarkPlugins={[remarkGfm]}
       >
         {message.content}
       </Markdown>
-      {/* </pre> */}
     </div>
   );
 };

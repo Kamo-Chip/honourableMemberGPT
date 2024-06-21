@@ -43,7 +43,7 @@ export const getContext = async (
       politicalParty
     );
 
-    // console.log(matches);
+    console.log(matches);
 
     const qualifyingDocs = matches.filter(
       (match) => match.score && match.score > 0.7
