@@ -50,9 +50,9 @@ export const PromptSuggestionContainer = ({
             />
             <PromptSuggestion
               setInput={setInput}
-              prompt={"Give me quick a summary of the document"}
+              prompt={"What is their approach to reducing crime?"}
               id={`prompt-4`}
-              title={"🥱 TLDR"}
+              title={"🔫 Crime"}
               setHasClickedSuggestion={setHasClickedSuggestion}
             />
           </>
