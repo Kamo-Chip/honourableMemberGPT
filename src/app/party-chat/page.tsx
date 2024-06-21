@@ -15,6 +15,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { SetStateAction, useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { Dispatch } from "react";
+
 const Page = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -45,12 +46,19 @@ const Page = () => {
 
   useEffect(() => {
     const chattingWith = searchParams.get("chattingWith");
+
     if (chattingWith != null) {
-      setDocumentUrl("");
-      fetchDocument(chattingWith);
-      setIsSidebarVisible(false);
-      setIsDocumentVisible(false);
-      setSelectedParty(getChatSubjectDetails(chattingWith));
+      const chattingWithDetails = getChatSubjectDetails(chattingWith);
+      
+      if (!chattingWithDetails) {
+        router.push("/404");
+      } else {
+        setDocumentUrl("");
+        fetchDocument(chattingWith);
+        setIsSidebarVisible(false);
+        setIsDocumentVisible(false);
+        setSelectedParty(chattingWithDetails);
+      }
     } else {
       router.push("/");
     }
