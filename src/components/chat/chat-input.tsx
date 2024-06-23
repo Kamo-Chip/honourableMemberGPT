@@ -1,22 +1,16 @@
 "use client";
 
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
-import {
-    handleSignIn
-} from "@/lib/dbFunctions";
+import { handleSignIn } from "@/lib/dbFunctions";
 import confetti from "canvas-confetti";
-import {
-    ChangeEventHandler,
-    useEffect,
-    useState
-} from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { IoIosSend } from "react-icons/io";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
@@ -40,8 +34,8 @@ export const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
   };
 
   useEffect(() => {
-    if (numMessages == 3) {
-      const hasSignedIn = localStorage.getItem("hasSignedIn") === "tre";
+    if (numMessages == 5) {
+      const hasSignedIn = localStorage.getItem("hasSignedIn") === "tue";
       if (!hasSignedIn) {
         setOpen(true);
         localStorage.setItem("hasSignedIn", "true");
@@ -52,7 +46,7 @@ export const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
   return (
     <div className="flex flex-col relative max-w-[900px] mx-auto bg-[#fafafa54] rounded">
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="max-w-[90vw] sm:max-w-[425px] rounded-lg">
           <DialogHeader>
             <DialogTitle>Seems that you like the app</DialogTitle>
             <DialogDescription>
@@ -95,7 +89,10 @@ export const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
         <Button
           type="submit"
           id="submit-btn"
-          className="rounded-full w-[50px] h-[35px]"
+          // disabled={input.trim() === ""}
+          className={`rounded-full w-[50px] h-[35px] ${
+            input.trim() === "" ? "cursor-not-allowed" : "cursor-pointer"
+          }`}
           onClick={() => {
             setNumMessages(numMessages + 1);
             const numPrompts = localStorage.getItem("numPrompts");
@@ -112,7 +109,7 @@ export const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
           <IoIosSend size="24px" color="#fff" />
         </Button>
       </div>
-      <span className="text-sm text-gray-500 font-medium my-2 text-center shadow-[0 0 5px]">
+      <span className="text-xs text-gray-400 font-normal my-2 text-center shadow-[0 0 5px] ">
         HonourableMemberGPT can make mistakes. Check important info.
       </span>
     </div>

@@ -16,6 +16,8 @@ import { useState } from "react";
 import { HiMenuAlt4 } from "react-icons/hi";
 import SearchInput from "../search-input";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import ShareComponent from "@/containers/share/share";
+import { title } from "process";
 
 const ChatSidebar = () => {
   const [open, setOpen] = useState(false);
@@ -44,6 +46,9 @@ const ChatSidebar = () => {
           </SheetClose>
         </div>
         <Plug position="absolute bottom-2 left-2 text-black" />
+        <div className="absolute bottom-2 right-2 ">
+          <ShareComponent shareData={{ title: "", text: "", url: "" }} />
+        </div>
       </SheetContent>
     </Sheet>
   );
@@ -56,9 +61,13 @@ const SidebarListItem = ({ party }: { party: PoliticalParty }) => {
   return (
     <li
       className={`p-4 hover:bg-gray-400 cursor-pointer flex items-center rounded-3xl font-medium ${
-        searchParams.get("chattingWith") === party.abbreviation ? "selectedBtn" : ""
+        searchParams.get("chattingWith") === party.abbreviation
+          ? "selectedBtn"
+          : ""
       }`}
-      onClick={() => router.push(`/party-chat?chattingWith=${party.abbreviation}`)}
+      onClick={() =>
+        router.push(`/party-chat?chattingWith=${party.abbreviation}`)
+      }
     >
       <Avatar className="bg-gray-50 mr-4 w-[30px] h-[30px] rounded-full">
         <AvatarImage src={`/party-icons/${party.logoUrl}`} className="" />
