@@ -35,7 +35,7 @@ export const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
 
   useEffect(() => {
     if (numMessages == 5) {
-      const hasSignedIn = localStorage.getItem("hasSignedIn") === "tue";
+      const hasSignedIn = localStorage.getItem("hasSignedIn") === "true";
       if (!hasSignedIn) {
         setOpen(true);
         localStorage.setItem("hasSignedIn", "true");
