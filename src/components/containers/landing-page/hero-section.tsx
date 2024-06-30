@@ -28,6 +28,7 @@ const HeroSection = () => {
               src="/images/yt-thumbnail-no-arrow.png"
               width={1280}
               height={720}
+              quality={70}
               alt=""
               className="w-[100px] h-[50px] object-cover rounded-md mb-2 border border-gray-200"
             />
