@@ -2,5 +2,3 @@ Structure codebase
     - Store types correctly
     - Create types for each component
     - Componentise everything
-Fix cta button appearing during loading
-Fix failure to autosubmit prompt

@@ -1,6 +1,6 @@
 "use client";
 
-import ErrorPage from "@/containers/error-page/error-container";
+import ErrorPage from "@/components/containers/error-page/error-container";
 
 const Page = () => {
   return (

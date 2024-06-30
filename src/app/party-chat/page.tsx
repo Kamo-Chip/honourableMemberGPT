@@ -6,7 +6,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import TooltipWrapper from "@/components/wrappers/tooltip-wrapper";
-import Plug from "@/containers/plug/plug";
+import Plug from "@/components/containers/plug/plug";
 import { getDocument } from "@/lib/dbFunctions";
 import { gnuDetails, politicalParties } from "@/lib/utils";
 import { PoliticalParty } from "@/types/PoliticalParty";

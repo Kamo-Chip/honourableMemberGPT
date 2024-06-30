@@ -7,8 +7,8 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import Logo from "@/containers/logo/logo";
-import Plug from "@/containers/plug/plug";
+import Logo from "@/components/containers/logo/logo";
+import Plug from "@/components/containers/plug/plug";
 import { gnuDetails, politicalParties } from "@/lib/utils";
 import { PoliticalParty } from "@/types/PoliticalParty";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -16,8 +16,9 @@ import { useState } from "react";
 import { HiMenuAlt4 } from "react-icons/hi";
 import SearchInput from "../search-input";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import ShareComponent from "@/containers/share/share";
+import ShareComponent from "@/components/containers/share/share";
 import { title } from "process";
+import { FaShareSquare } from "react-icons/fa";
 
 const ChatSidebar = () => {
   const [open, setOpen] = useState(false);
@@ -47,7 +48,18 @@ const ChatSidebar = () => {
         </div>
         <Plug position="absolute bottom-2 left-2 text-black" />
         <div className="absolute bottom-2 right-2 ">
-          <ShareComponent shareData={{ title: "", text: "", url: "" }} />
+          <ShareComponent
+            shareData={{
+              title: "HonourableMemberGPT",
+              text: "Check out this chatbot made by a South African student",
+              url: "https://www.honourablemembergpt.com",
+            }}
+            content={
+              <div className="flex items-center text-white pb-2 pl-4 pr-2 rounded-lg">
+                <FaShareSquare size="24px" />
+              </div>
+            }
+          />
         </div>
       </SheetContent>
     </Sheet>

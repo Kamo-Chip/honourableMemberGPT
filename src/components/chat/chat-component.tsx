@@ -1,15 +1,9 @@
 "use client";
 
-import {
-  saveChatHistory,
-  updateChatHistory
-} from "@/lib/dbFunctions";
+import { saveChatHistory, updateChatHistory } from "@/lib/dbFunctions";
 import { useChat } from "ai/react";
 import { useSearchParams } from "next/navigation";
-import {
-  useEffect,
-  useState
-} from "react";
+import { useEffect, useState } from "react";
 import MessageList from "../message-list";
 import { ChatInput } from "./chat-input";
 import { PromptSuggestionContainer } from "./prompt-suggestion-container";
@@ -45,10 +39,12 @@ const ChatComponent = ({ isChatLoading }: ChatComponentProps) => {
       updateChatHistory(currChatSession, messages);
     }
   };
-  
+
   useEffect(() => {
     setMessages([]);
+    setInput("");
     setCurrChatSession("");
+    setHasClickedSuggestion(false);
   }, [searchParams]);
 
   useEffect(() => {

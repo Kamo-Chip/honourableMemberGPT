@@ -25,15 +25,22 @@ export const politicalParties = [
     logoUrl: "eff.png",
   },
   { fullName: "Inkatha Free Party", abbreviation: "ifp", logoUrl: "ifp.png" },
-  // {
-  //   fullName: "Government of National Unity",
-  //   abbreviation: "gnu",
-  //   logoUrl: "gnu.png",
-  // },
 ];
 
 export const gnuDetails = {
   fullName: "Government of National Unity",
   abbreviation: "gnu",
   logoUrl: "gnu.png",
+};
+
+export const copyTextToClipboard = async (text: string) => {
+  try {
+    if ("clipboard" in navigator) {
+      return await navigator.clipboard.writeText(text);
+    } else {
+      return document.execCommand("copy", true, text);
+    }
+  } catch (e: any) {
+    console.log(e.message);
+  }
 };

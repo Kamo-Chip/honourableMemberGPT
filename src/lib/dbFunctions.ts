@@ -48,7 +48,8 @@ export const updateChatHistory = async (id: string, messages: Message[]) => {
 /** Sign Ins */
 export const handleSignIn = async () => {
   try {
-    await signInWithPopup(auth, new GoogleAuthProvider());
+    const res = await signInWithPopup(auth, new GoogleAuthProvider());
+    return res.user;
   } catch (e: any) {
     console.log("Could not sign in user: ", e.message);
     throw new Error("Could not sign in user: ", e.message);

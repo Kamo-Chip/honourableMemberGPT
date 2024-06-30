@@ -1,4 +1,4 @@
-import StandardLoading from "@/containers/loading/standard-loading";
+import StandardLoading from "@/components/containers/loading/standard-loading";
 
 export default function Loading() {
   return <StandardLoading />;

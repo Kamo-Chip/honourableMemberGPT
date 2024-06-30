@@ -1,7 +1,7 @@
 "use client";
 
-import StandardLoading from "@/containers/loading/standard-loading";
-import InfiniteHorizontalScrollSlide from "@/containers/sliders/infinite-slider";
+import StandardLoading from "@/components/containers/loading/standard-loading";
+import InfiniteHorizontalScrollSlide from "@/components/containers/sliders/infinite-slider";
 import { politicalParties } from "@/lib/utils";
 import { PoliticalParty } from "@/types/PoliticalParty";
 import { useRouter } from "next/navigation";

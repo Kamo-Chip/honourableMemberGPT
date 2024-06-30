@@ -1,6 +1,6 @@
-import HeaderSection from "@/containers/landing-page/header-section";
-import HeroSection from "@/containers/landing-page/hero-section";
-import Plug from "@/containers/plug/plug";
+import HeaderSection from "@/components/containers/landing-page/header-section";
+import HeroSection from "@/components/containers/landing-page/hero-section";
+import Plug from "@/components/containers/plug/plug";
 
 export default function Home() {
   return (

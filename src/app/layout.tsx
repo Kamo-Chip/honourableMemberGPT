@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ogImage from "./opengraph-image.png";
 import { Analytics } from "@vercel/analytics/react";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://honourable-member-gpt.vercel.app"),
@@ -37,7 +38,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col">
-        <MaxWidthWrapper>{children}</MaxWidthWrapper>
+        <MaxWidthWrapper>
+          {children}
+          <Toaster />
+        </MaxWidthWrapper>
+
         <Analytics />
       </body>
     </html>

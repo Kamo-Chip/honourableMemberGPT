@@ -1,71 +1,123 @@
 "use client";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import ShareComponent from "@/components/containers/share/share";
 import { handleSignIn } from "@/lib/dbFunctions";
 import confetti from "canvas-confetti";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import React, { ChangeEventHandler, useState } from "react";
+import { FaShareSquare } from "react-icons/fa";
 import { IoIosSend } from "react-icons/io";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
+import { useToast } from "../ui/use-toast";
+import DialogWrapper, { emptyDialogDetails } from "../wrappers/dialog-wrapper";
+
+const MAX_STARTER_PROMPTS = 24;
+const MAX_SIGNED_IN_PROMPTS = 36;
 
 type ChatInputProps = {
   handleInputChange: ChangeEventHandler;
   input: string;
 };
-export const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
-  const [numMessages, setNumMessages] = useState<number>(0);
-  const [open, setOpen] = useState(false);
 
+export const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
+  const { toast } = useToast();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [dialogDetails, setDialogDetails] = useState(emptyDialogDetails);
   const signInUser = async () => {
     try {
-      await handleSignIn();
+      const user = await handleSignIn();
       localStorage.setItem("hasSignedIn", "true");
       confetti();
+      return user;
     } catch (e: any) {
       console.log("Could not sign in user: ", e.message);
     }
   };
 
-  useEffect(() => {
-    if (numMessages == 5) {
-      const hasSignedIn = localStorage.getItem("hasSignedIn") === "true";
-      if (!hasSignedIn) {
-        setOpen(true);
-        localStorage.setItem("hasSignedIn", "true");
-      }
+  const validatePrompt = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const numPromptsStr = localStorage.getItem("numPrompts");
+    let numPrompts = 0;
+
+    if (numPromptsStr) {
+      numPrompts = Number.parseInt(numPromptsStr);
     }
-  }, [numMessages]);
+
+    if (numPrompts === 0) {
+      localStorage.setItem("numPrompts", "1");
+      return;
+    }
+
+    const hasSignedIn = localStorage.getItem("hasSignedIn") === "true";
+    if (numPrompts === MAX_STARTER_PROMPTS && !hasSignedIn) {
+      e.preventDefault();
+      setDialogDetails({
+        title: "Seems that you like the app",
+        description: `Unfortunately you ran out of prompts. Sign up to get ${
+          MAX_SIGNED_IN_PROMPTS - MAX_STARTER_PROMPTS
+        } more prompts`,
+        footerContent: (
+          <Button
+            className="mx-auto"
+            onClick={async () => {
+              const res = await signInUser();
+              setIsDialogOpen(false);
+              if (res) {
+                toast({
+                  title: "Thank you for signing in",
+                  description: `Use your ${
+                    MAX_SIGNED_IN_PROMPTS - MAX_STARTER_PROMPTS
+                  } prompts wisely 🧠`,
+                  duration: 3000,
+                });
+              }
+            }}
+          >
+            {"Sign Up - It's free"}
+          </Button>
+        ),
+      });
+      setIsDialogOpen(true);
+      return;
+    }
+
+    if (hasSignedIn && numPrompts === MAX_SIGNED_IN_PROMPTS) {
+      e.preventDefault();
+      setDialogDetails({
+        title: "OpenAI credits aren't cheap",
+        description:
+          "Unfortunately you've run out of prompts. Share the app with friends and I'll consider increasing your limit",
+        footerContent: (
+          <ShareComponent
+            shareData={{
+              title: "HonourableMemberGPT",
+              text: "Check out this chatbot made by a South African student",
+              url: "https://www.honourablemembergpt.com",
+            }}
+            content={
+              <Button className="mx-auto text-white">
+                Share app
+                <span className="ml-2">
+                  <FaShareSquare size="24px" />
+                </span>
+              </Button>
+            }
+          />
+        ),
+      });
+      setIsDialogOpen(true);
+      return;
+    }
+
+    localStorage.setItem("numPrompts", `${numPrompts + 1}`);
+  };
 
   return (
     <div className="flex flex-col relative max-w-[900px] mx-auto bg-[#fafafa54] rounded">
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-[90vw] sm:max-w-[425px] rounded-lg">
-          <DialogHeader>
-            <DialogTitle>Seems that you like the app</DialogTitle>
-            <DialogDescription>
-              Sign up to get notified via email when I upload new projects
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              className="mx-auto"
-              onClick={async () => {
-                await signInUser();
-                setOpen(false);
-              }}
-            >
-              {"Sign Up - It's free"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <DialogWrapper
+        open={isDialogOpen}
+        setOpen={setIsDialogOpen}
+        dialogDetails={dialogDetails}
+      />
       <div
         className={`flex items-center bg-white border-solid border-gray-200 border-[1px] shadow-sm rounded-full py-1 px-2`}
       >
@@ -89,22 +141,11 @@ export const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
         <Button
           type="submit"
           id="submit-btn"
-          // disabled={input.trim() === ""}
+          disabled={input.trim() === ""}
           className={`rounded-full w-[50px] h-[35px] ${
             input.trim() === "" ? "cursor-not-allowed" : "cursor-pointer"
           }`}
-          onClick={() => {
-            setNumMessages(numMessages + 1);
-            const numPrompts = localStorage.getItem("numPrompts");
-            if (!numPrompts) {
-              localStorage.setItem("numPrompts", "1");
-            } else {
-              localStorage.setItem(
-                "numPrompts",
-                `${Number.parseInt(numPrompts) + 1}`
-              );
-            }
-          }}
+          onClick={validatePrompt}
         >
           <IoIosSend size="24px" color="#fff" />
         </Button>

@@ -18,8 +18,8 @@ const MessageList = ({
   return (
     <div className="flex flex-col">
       {messages.map((message, idx) => (
-        <>
-          <div ref={scrollRef} key={message.id}>
+        <div key={message.id}>
+          <div ref={scrollRef}>
             <ChatMessage
               message={message}
               isLast={idx == messages.length - 1}
@@ -31,7 +31,7 @@ const MessageList = ({
           idx == messages.length - 1 ? (
             <MessageSkeleton />
           ) : null}
-        </>
+        </div>
       ))}
     </div>
   );
