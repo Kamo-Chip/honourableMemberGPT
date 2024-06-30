@@ -20,7 +20,7 @@ const HeroSection = () => {
         action: (
           <a
             className="flex flex-col"
-            href="https://www.youtube.com/@kamoio"
+            href="https://youtu.be/jy0QpkZyCck"
             target="_blank"
             rel="noopener noreferrer"
           >
