@@ -29,7 +29,7 @@ const HeroSection = () => {
               width={1280}
               height={720}
               alt=""
-              className="w-[128px] h-[72px] object-cover rounded-md mb-2 border border-gray-200"
+              className="w-[100px] h-[50px] object-cover rounded-md mb-2 border border-gray-200"
             />
             <span className="bg-black py-2 px-4 text-white rounded-md text-sm font-medium text-center">
               Watch
