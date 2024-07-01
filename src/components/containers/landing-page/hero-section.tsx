@@ -32,7 +32,11 @@ const HeroSection = () => {
               alt=""
               className="w-[100px] h-[50px] object-cover rounded-md mb-2 border border-gray-200"
             />
-            <span className="bg-black py-2 px-4 text-white rounded-md text-sm font-medium text-center">
+            <span className="relative bg-black py-2 px-4 text-white rounded-md text-sm font-medium text-center">
+              <span className="absolute top-[-3px] right-[-3px] flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+              </span>
               Watch
             </span>
           </a>
