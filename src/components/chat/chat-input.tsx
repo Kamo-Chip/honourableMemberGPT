@@ -11,8 +11,8 @@ import { Textarea } from "../ui/textarea";
 import { useToast } from "../ui/use-toast";
 import DialogWrapper, { emptyDialogDetails } from "../wrappers/dialog-wrapper";
 
-const MAX_STARTER_PROMPTS = 24;
-const MAX_SIGNED_IN_PROMPTS = 36;
+const MAX_STARTER_PROMPTS = 5;
+const MAX_SIGNED_IN_PROMPTS = 10;
 
 type ChatInputProps = {
   handleInputChange: ChangeEventHandler;
@@ -48,7 +48,7 @@ export const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
     }
 
     const hasSignedIn = localStorage.getItem("hasSignedIn") === "true";
-    if (numPrompts === MAX_STARTER_PROMPTS && !hasSignedIn) {
+    if (numPrompts >= MAX_STARTER_PROMPTS && !hasSignedIn) {
       e.preventDefault();
       setDialogDetails({
         title: "Seems that you like the app",
@@ -80,7 +80,7 @@ export const ChatInput = ({ handleInputChange, input }: ChatInputProps) => {
       return;
     }
 
-    if (hasSignedIn && numPrompts === MAX_SIGNED_IN_PROMPTS) {
+    if (hasSignedIn && numPrompts >= MAX_SIGNED_IN_PROMPTS) {
       e.preventDefault();
       setDialogDetails({
         title: "OpenAI credits aren't cheap",
