@@ -8,7 +8,7 @@ const Plug = ({ position }: { position: string }) => {
       triggerContent={
         <a
           className={`${position} text-sm p-2 border-dotted border-gray-200 border-2 rounded-lg font-light bg-white cursor-pointer z-[100] shadow-sm font-grifter tracking-wide flex items-center`}
-          href="https://www.youtube.com/@kamoio"
+          href="https://www.youtube.com/channel/UC4GyUVKO5_kF0eC7jP9Rjww?sub_confirmation=1"
         >
           <FaYoutube color="#FF0000" />
           <span className="ml-2 mt-1">Built by Kamo 👨🏾‍💻</span>
